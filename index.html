@@ -1,1 +1,168 @@
-hi
+<html>
+  <head>
+    <style>
+      .scoreboard {
+  display: inline-block;
+  font-family: Roboto, sans-serif;
+  /*height: 60px;*/
+  flex: 1;
+  display: flex;
+}
+
+.scoreboard .team {
+  float: left;
+  color: white;
+  border-right: 2px solid white;
+  height: 100%;
+}
+
+.scoreboard .team.red {
+  background-color: red;
+}
+
+.scoreboard .team.blue {
+  background-color: blue;
+}
+
+.scoreboard .team .teamName {
+  padding: 2px 30px 2px 5px;
+}
+
+.scoreboard .team .score {
+  font-size: 30px;
+  font-weight: 700;
+  border-bottom: 2px solid white;
+  padding: 2px 7px;
+  background-size: auto 75%;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 5px) calc(100% - 5px);
+}
+
+.scoreboard .team.flairbnb .score {
+  background-image: url(https://imgur.com/Wbf9CQx.png);
+}
+
+.scoreboard .team.rubgrabs .score {
+  background-image: url(https://imgur.com/RxQnS0k.png);
+  background-size: auto 100%;
+  background-position: calc(100% - 5px) calc(100%);
+}
+
+.scoreboard .team .record {
+  text-align: right;
+  padding: 2px 5px;
+  font-size: 12px;
+}
+
+.scoreboard .game {
+  float: left;
+  width: 200px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.scoreboard .game .clock {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  padding: 2px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scoreboard .game .period {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scoreboard .game .recap {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  padding: 2px 5px;
+  font-size: 12px;
+}
+    </style>
+    
+  </head>
+  <body>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+
+<div class="scoreboard">
+  <div class="team flairbnb red">
+    <div class="teamName">
+      Flairbnb
+    </div>
+    <div class="score">
+      3
+    </div>
+    <div class="record">
+      4-0-0-2
+    </div>
+  </div>
+  <div class="team rubgrabs blue">
+    <div class="teamName">
+      Rubgrabs
+    </div>
+    <div class="score">
+      0
+    </div>
+    <div class="record">
+      1-0-1-4
+    </div>
+  </div>
+  <div class="game">
+    <div class="clock">
+      &nbsp;
+    </div>
+    <div class="period">
+      Game One - Half One
+    </div>
+    <div class="recap">
+      &nbsp;
+      <!--strong>Game One:</strong> 12-2 Flairbnb-->
+    </div>
+  </div>
+</div>
+<br /><br />
+<div>
+  <input id="mins" value="10"></input>
+  <input id="seconds" value="0"></input>
+<button id="startClock" onclick="start()">Start Clock</button>
+</div>
+    <script>
+      var interval = null;
+var timeRemaining = 1;
+
+function clock() {
+  if (timeRemaining < 0) {
+    clearInterval(interval);
+    return;
+  }
+  var minutes = Math.floor(timeRemaining/60);
+  var seconds =  ('0' + Math.floor(timeRemaining%60)).slice(-2); 
+  document.querySelector('.clock').innerHTML = minutes + ':' + seconds;
+  timeRemaining--;
+}
+
+function start() {
+  clearInterval(interval);
+  timeRemaining = parseInt(location.hash.replace('#','').split(':')[0]) * 60 + parseInt(location.hash.replace('#','').split(':')[1]);
+  interval = setInterval(clock, 1000);
+}
+
+if (location.hash) {
+  start()
+}
+
+    </script>
+  </body>
+</html>
